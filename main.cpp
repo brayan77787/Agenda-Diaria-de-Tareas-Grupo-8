@@ -46,7 +46,7 @@ cout <<" \t\t\t*****************************************************************
 
 Tarea nuevaTarea; // Creo la estructura para la tarea nueva
 cout <<" \n\tIntroduce la fecha (Ej: 24/06/2026) : "<< endl;
-cin.get();
+cin.ignore();
 getline(cin, nuevaTarea.fecha);
 
 cout <<" \n\tDescripcion de la tarea : "<< endl;;
@@ -56,12 +56,13 @@ nuevaTarea.completada = false;
 idActual++;
 
 // Ahora guardo la tarea en el archivo de tareas
+// Ahora guardo la tarea en el archivo de tareas
 ofstream escribir;
 escribir.open("tareas.txt", ios::app);
-escribir <<" \n " << idActual;
-escribir <<" \n " << nuevaTarea.fecha;
-escribir <<" \n " << nuevaTarea.completada;
-escribir <<" \n " << nuevaTarea.descripcion;
+escribir << idActual << "\n";
+escribir << nuevaTarea.fecha << "\n";
+escribir << nuevaTarea.completada << "\n";
+escribir << nuevaTarea.descripcion << "\n";
 escribir.close();
 
 // Guardo el ID actual en un archivo aparte
@@ -193,10 +194,10 @@ void completarTarea() {
             }
             
             // Reescribe en el archivo temporal
-            archivoTemporal << "\n" << t.id;
-            archivoTemporal << "\n" << t.fecha;
-            archivoTemporal << "\n" << t.completada;
-            archivoTemporal << "\n" << t.descripcion;
+            archivoTemporal << t.id << "\n";
+            archivoTemporal << t.fecha << "\n";
+            archivoTemporal << t.completada << "\n";
+            archivoTemporal << t.descripcion << "\n";
         }
         leer.close();
         archivoTemporal.close();
@@ -239,10 +240,10 @@ void eliminarDatos() {
             
             // Solo copia si el ID es diferente (así se "elimina")
             if (t.id != idBuscado) {
-                archivoTemporal << "\n" << t.id;
-                archivoTemporal << "\n" << t.fecha;
-                archivoTemporal << "\n" << t.completada;
-                archivoTemporal << "\n" << t.descripcion;
+                archivoTemporal << t.id << "\n";
+                archivoTemporal << t.fecha << "\n";
+                archivoTemporal << t.completada << "\n";
+                archivoTemporal << t.descripcion << "\n";
             }
         }
         leer.close();
