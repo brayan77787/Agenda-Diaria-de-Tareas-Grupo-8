@@ -257,3 +257,76 @@ void eliminarDatos() {
         cout << "\n\tRegistro no eliminado\n";
     }
 }
+
+// El programa principal
+int main()
+{
+    #ifdef _WIN32
+        SetConsoleOutputCP(CP_UTF8);
+    #endif
+    
+    // Intenta leer el ID guardado (para mantener el contador entre ejecuciones)
+    ifstream leer;
+    leer.open("id.txt");
+    if (!leer.fail()) {
+        leer >> idActual;  // Si existe el archivo, lee el último ID
+    }
+    else {
+        idActual = 0;  // Si no existe, empieza de 0
+    }
+    leer.close();
+
+    // Loop principal que siempre está corriendo hasta que sales
+    while (true) {
+
+        limpiarPantalla(); 
+        
+        // Menú principal
+        cout<<"\n\n\t\t\t***********************************************************************"<<endl;
+        cout<<"\t\t\t* *"<<endl;
+        cout<<"\t\t\t* BIENVENIDO A Tu Lista de Tareas                     *"<<endl;
+        cout<<"\t\t\t* *"<<endl;
+        cout<<"\t\t\t***********************************************************************"<<endl;
+        
+        cout << "\n\t1. Agregar tarea";
+        cout << "\n\t2. Ver tareas";
+        cout << "\n\t3. Buscar tarea";
+        cout << "\n\t4. Marcar tarea como completada"; 
+        cout << "\n\t5. Eliminar tarea";
+        cout << "\n\t6. Salir del programa";
+
+        int seleccion;
+        cout << "\n\n\tIntroduce una opcion : ";
+        cin >> seleccion;
+        
+        // Switch para ejecutar lo que el usuario selecciona
+        switch (seleccion) {
+        case 1:
+            agregarTarea();
+            cout << "\n\t"; pausarPrograma();
+            break;
+        case 2:
+            leerDatos();
+            cout << "\n\t"; pausarPrograma();
+            break;
+        case 3:
+            buscarDatos();
+            cout << "\n\t"; pausarPrograma();
+            break;
+        case 4:
+            completarTarea();
+            cout << "\n\t"; pausarPrograma();
+            break;
+        case 5:
+            eliminarDatos();
+            cout << "\n\t"; pausarPrograma();
+            break;
+        case 6:
+            cout << "\n\tSaliendo del programa... Hasta luego!\n";
+            return 0;
+        default: 
+            cout<<"\n\tIntroduce una opcion valida entre 1 y 6";
+            cout << "\n\t"; pausarPrograma();
+        }
+    }
+}
