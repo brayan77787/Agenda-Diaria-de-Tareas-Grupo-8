@@ -81,3 +81,79 @@ agregarTarea();
 }
 
 }
+
+
+// Función para imprimir una tarea
+void imprimir(Tarea t) {
+    string estado = (t.completada) ? "Completada" : "Pendiente";
+    cout << "\tID: " << t.id << " | Fecha: " << t.fecha << " | Estado: [" << estado << "]" << endl;
+    cout << "\tTarea: " << t.descripcion << endl;
+    cout << "\t-----------------------------------------------------------------------" << endl;
+}
+
+// Lee todas las tareas del archivo y las muestra
+void leerDatos() {
+    limpiarPantalla();
+    cout<<"\t\t\t***********************************************************************"<<endl;
+    cout<<"\t\t\t                                                                       "<<endl;
+    cout<<"\t\t\t                       BIENVENIDO A Tu Lista de Tareas                 "<<endl;
+    cout<<"\t\t\t                                                                       "<<endl;
+    cout<<"\t\t\t***********************************************************************"<<endl<<endl<<endl;
+    
+    Tarea t;  // Variable auxiliar para leer cada tarea
+    ifstream leer;
+    leer.open("tareas.txt");  // Abre el archivo en modo lectura
+    cout << "\n\t\t\t------------------Tus tareas actuales en la lista--------------------" << endl; 
+    
+    // Va leyendo línea por línea y armando las tareas
+    while (leer >> t.id) {
+        leer.ignore();
+        getline(leer, t.fecha); 
+        leer >> t.completada;
+        leer.ignore(); 
+        getline(leer, t.descripcion);
+        imprimir(t);
+    }
+    leer.close();  // Cierra el archivo
+    cout << "\n"; 
+}
+
+
+// Busca una tarea por ID y la retorna (o retorna -1 si no existe)
+int buscarDatos() {
+    limpiarPantalla();
+    cout<<"\t\t\t***********************************************************************"<<endl;
+    cout<<"\t\t\t                                                                       "<<endl;
+    cout<<"\t\t\t                       BIENVENIDO A Tu Lista de Tareas                 "<<endl;
+    cout<<"\t\t\t                                                                       "<<endl;
+    cout<<"\t\t\t***********************************************************************"<<endl<<endl<<endl;
+
+    int idBuscado;
+    cout << "\n\tIntroduce el ID de la tarea : ";     
+    cin >> idBuscado;
+    
+    Tarea t;
+    ifstream leer;
+    leer.open("tareas.txt");
+    
+    // Recorre todas las tareas hasta encontrar la que coincide
+    while (leer >> t.id) {
+        leer.ignore();
+        getline(leer, t.fecha);
+        leer >> t.completada;
+        leer.ignore();
+        getline(leer, t.descripcion);
+        
+        if (t.id == idBuscado) {  // La encontro
+            cout << "\n\t--- Tarea Encontrada ---" << endl;
+            imprimir(t);
+            leer.close(); 
+            return idBuscado;  // Retorna el ID
+        }
+    }
+    leer.close();
+    
+    // Si llegó aquí es porque no encontró nada
+    cout << "\n\tNo se encontro ninguna tarea con el ID " << idBuscado << ".\n" << endl;
+    return -1;  // Retorna -1 para indicar error
+}
